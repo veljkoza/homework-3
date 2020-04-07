@@ -37,10 +37,23 @@ const addItemDescription = document.getElementById("item-desc");
 const addItemValue = document.getElementById("item-value");
 const addItemBtn = document.querySelector(".item-adder-container button");
 
-let currentBudget = availableBudgetElement.textContent.split(
-  1,
-  availableBudgetElement.textContent.length
-);
+localStorage.setItem("budget", 0);
+localStorage.setItem("expenses", 0);
+
+let budget = localStorage.getItem("budget");
+let income = localStorage.getItem("income");
+let expenses = localStorage.getItem("expenses");
+
+
+
+if (budget >= 0) {
+  availableBudgetElement.innerHTML = `+${budget}`;
+} else {
+  availableBudgetElement.innerHTML = `-${budget}`;
+}
+
+currentIncomeElement.innerHTML = `+${income}`;
+currentExpensesElement.innerHTML = `-${expenses}`;
 
 let selectedSign = "+";
 (function loadEventListeners() {
@@ -54,15 +67,79 @@ let selectedSign = "+";
     }
   });
 
+  let previousDesc = "";
+  addItemDescription.addEventListener("keyup", (e) => {
+    let currentValue = addItemDescription.value;
+    if (
+      (e.keyCode >= 48 && e.keyCode <= 57) ||
+      (e.keyCode >= 96 && e.keyCode <= 105)
+    ) {
+      console.log(addItemDescription);
+
+      addItemDescription.value = previousDesc;
+    } else {
+      addItemDescription.value = currentValue;
+      previousDesc = currentValue;
+    }
+  });
+
+  function setInputFilter(textbox, inputFilter) {
+    [
+      "input",
+      "keydown",
+      "keyup",
+      "mousedown",
+      "mouseup",
+      "select",
+      "contextmenu",
+      "drop",
+    ].forEach(function (event) {
+      textbox.addEventListener(event, function () {
+        if (inputFilter(this.value)) {
+          this.oldValue = this.value;
+          this.oldSelectionStart = this.selectionStart;
+          this.oldSelectionEnd = this.selectionEnd;
+        } else if (this.hasOwnProperty("oldValue")) {
+          this.value = this.oldValue;
+          this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+        } else {
+          this.value = "";
+        }
+      });
+    });
+  }
+
+  setInputFilter(addItemValue, function (value) {
+    return /^-?\d*[.,]?\d{0,2}$/.test(value);
+  });
+
   addItemBtn.addEventListener("click", addItem);
 
   function addItem() {
-    createNewItem();
+    let obj = createNewItem();
+    let amount = parseFloat(obj.amount);
+    switch (obj.plus) {
+      case true:
+        refreshIncome(amount);
+      //localStorage.setItem("income",newIncome)
+    }
+  }
+
+  function refreshIncome(amount) {
+    oldIncome = parseFloat(localStorage.getItem("income"));
+    newIncome = oldIncome + amount;
+    localStorage.setItem("income", newIncome);
+    currentIncomeElement.innerHTML = `+${newIncome}`;
   }
 
   function createNewItem() {
     let leftUl = document.querySelector(".left");
     let rightUl = document.querySelector(".right");
+    //changed code
+    let object = {
+      plus: true,
+      amount: 0,
+    };
     let newItemDesc = addItemDescription.value;
     let newItemValue = addItemValue.value;
 
@@ -76,12 +153,17 @@ let selectedSign = "+";
     let newItemValueP = document.createElement("p");
 
     if (selectedSign === "+") {
+      object.plus = true;
+      object.amount = newItemValue;
       newItemValue = `+ ${newItemValue}`;
       newItemValueP.innerHTML = newItemValue;
 
       newLi.appendChild(newItemValueP);
       leftUl.appendChild(newLi);
     } else {
+      object.plus = false;
+      object.amount = newItemValue;
+
       let newDivRight = document.createElement("div");
       newItemValue = `- ${newItemValue}`;
       newItemValueP.innerHTML = newItemValue;
@@ -105,6 +187,7 @@ let selectedSign = "+";
       newLi.appendChild(newDivRight);
       rightUl.appendChild(newLi);
     }
+    return object;
   }
 
   function countPercentage(input, sum) {
