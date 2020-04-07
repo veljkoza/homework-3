@@ -1,0 +1,203 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.first-section{
+    background-image: url("img/bg.jpg") ;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    max-height: 450px;
+}
+
+.budget-container{
+    min-height: 230px;
+    width: 23%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #55462c8f;
+    border-radius: 5px;
+}
+
+.budget-header{
+}
+
+.budget-header,
+.available-budget{
+    text-align: center;
+    color: white;
+}
+
+.budget-container > *{
+    width: 100%;
+    margin: .5rem;
+}
+
+.money-box{
+    width: 90%;
+    height: 3rem;
+    padding: 0 .7rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+    position: relative;
+    border-radius: 5px;
+}
+
+.money-box p:first-of-type{
+    width: 77%;
+}
+
+.money-box p:last-of-type{
+    width: 33%;
+    margin-right: .5rem;
+    color: white;
+}
+
+
+#income{
+    background-color: teal;
+}
+
+#expenses{
+    background-color: orangered;
+}
+
+.expensePercentege{
+    padding: .3rem;
+    font-size: smaller;
+    margin: 0;
+    position: absolute;
+    background-color: #ffffff8f;
+    height: auto;
+    width: auto;
+    top: 22%;
+    right: 3%;
+    bottom: 22%;
+}
+
+/*SECTION-2*/
+.second-section{
+    height: 4rem;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+}
+
+.item-adder-container{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-adder-container > *{
+    height: 60%;
+}
+
+.toggler{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 8%;
+    background-color: white;
+    margin-right: .3rem;
+}
+
+
+.toggler-icons i{
+    line-height: 3px;
+    display: block;
+}
+
+.add-item{
+    width: 75%;
+}
+
+.add-item input{
+    height: 100%;
+    padding: 0 0.3rem;
+}
+
+#item-desc{
+    width: 75%;
+}
+
+#item-value{
+    width: 23%;
+}
+
+.item-adder-container button{
+    font-size: 1.5rem;
+    width: 10%;
+}
+
+/*THIRD SECTION*/
+.third-section{
+    padding: 3rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.statistics-container{
+    display: flex;
+    width: 70%;
+    justify-content: center;
+}
+
+.side{
+    width: 33%;
+    margin: 0 1rem;
+}
+
+.side h4{
+    margin-bottom: 1rem;
+}
+
+.left h4{
+    color: teal;
+}
+
+.right h4{
+    color: orangered;
+}
+
+.item{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    min-height: 2rem;
+}
+
+.left .item p:last-of-type{
+    color: teal;
+}
+
+.right .item p:last-of-type{
+    color: orangered;
+}
+
+.item:nth-child(odd){
+    background-color: #c4c2c2;
+}
+
+.item p:first-child{
+    width: 70%;
+}
+
+.item p:last-of-type{
+}
+
