@@ -6,21 +6,23 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
         integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
+    <script src="script.js" defer></script>
+    
     <title>Document</title>
   </head>
   <body>
     <div class="first-section">
       <div class="budget-container">
-        <div class="budget-header"><h3>Available Budget in September</h3></div>
-        <div class="available-budget"><h1>+ 1,629.65</h1></div>
+        <div class="budget-header"><h3>Available Budget in <span id="monthSpan">September</span></h3></div>
+        <div class="available-budget">+ 1,629.65</div>
 
         <div id="income" class="money-box">
             <p>INCOME</p>
-            <p>+ 3,391.45</p>
+            <p>+3,391.45</p>
         </div>
         <div id="expenses" class="money-box">
             <p>EXPENSES</p>
-            <p>- 1.786.45</p>
+            <p>-1.786.45</p>
             <div class="expensePercentege">52%</div>
         </div>
       </div>
@@ -41,20 +43,20 @@
 
     <div class="third-section">
         <div class="statistics-container">
-            <div class="left side">
+            <ul class="left side">
                 <h4>INCOME</h4>
-                <div class="item"><p>Website project</p> <p>+ 2500</p></div>
-                <div class="item"><p>Website project</p> <p>+ 2500</p></div>
-                <div class="item"><p>Website project</p> <p>+ 2500</p></div>
-                <div class="item"><p>Website project</p> <p>+ 2500</p></div>
+                <li class="item"><p>Website project</p> <p>+ 2500</p></li>
+                <li class="item"><p>Website project</p> <p>+ 2500</p></li>
+                <li class="item"><p>Website project</p> <p>+ 2500</p></li>
+                <li class="item"><p>Website project</p> <p>+ 2500</p></li>
 
-            </div>
-            <div class="right side">
+            </ul>
+            <ul class="right side">
                 <h4>EXPENSES</h4>
-                <div class="item"><p>Website project</p> <p>+ 2500</p></div>
-                <div class="item"><p>Website project</p> <p>+ 2500</p></div>
-                <div class="item"><p>Website project</p> <p>+ 2500</p></div>
-            </div>
+                <li class="item"><p>Website project</p> <div class="item-right"><p>+ 2500</p><div class="expensePercentege">23%</div><button class="delete-button"><i class="fas fa-trash"></i></button></div></li>
+                <li class="item"><p>Website project</p> <div class="item-right"><p>+ 2500</p><div class="expensePercentege">23%</div><button class="delete-button"><i class="fas fa-trash"></i></button></div></li>
+                <li class="item"><p>Website project</p> <div class="item-right"><p>+ 2500</p><div class="expensePercentege">23%</div><button class="delete-button"><i class="fas fa-trash"></i></button></div></li>
+            </ul>
         </div>
     </div>
   </body>

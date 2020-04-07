@@ -30,6 +30,11 @@
 }
 
 .budget-header{
+    font-size: 1.4rem;
+}
+
+.available-budget{
+    font-size: 3rem;
 }
 
 .budget-header,
@@ -117,6 +122,7 @@
 
 
 .toggler-icons i{
+    cursor: pointer;
     line-height: 3px;
     display: block;
 }
@@ -175,29 +181,94 @@
 }
 
 .item{
+    width: 30%;
     display: flex;
+    flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
-    min-height: 2rem;
+    min-height: 3rem;
 }
 
 .left .item p:last-of-type{
     color: teal;
 }
 
-.right .item p:last-of-type{
+.item-right p:first-child{
     color: orangered;
 }
 
+.item {
+    background-color: white;
+}
+
+.item > p:first-child{
+    color: black;
+}   
+
 .item:nth-child(odd){
-    background-color: #c4c2c2;
+    background-color: #f1f0f0;
 }
 
 .item p:first-child{
-    width: 70%;
+    width: 60%;
 }
 
-.item p:last-of-type{
+.item-right{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 30%;
 }
 
+.item .expensePercentege{
+    position: relative;
+    background-color: rgba(255, 68, 0, 0.534);
+}
+.delete-button{
+    padding-left: .3rem;
+    border: none;
+    color: red;
+    background: transparent;
+    width: 0%;
+    display: block;
+    transition: width .8s;
+    z-index: -1;
+}
+
+.right .item:hover > .item-right > .delete-button{
+    z-index: 1;
+    width: 20%;
+}
+
+
+
+/*responsive*/
+
+@media only screen and (max-width: 450px) {
+    .first-section{
+        height: 5vh;
+        background-size: cover;
+    }
+    
+    .item-adder-container{
+        width: 98%;
+    }
+
+    .budget-container{
+        width: 80%;
+    }
+
+    .money-box p:first-child{
+        width: 30%;
+    }
+
+    .statistics-container{
+        flex-direction: column;
+        width: 94%;
+    }
+    .side{
+        width: 98%;
+        margin: .5rem 0;
+    }
+}
