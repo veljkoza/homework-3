@@ -7,7 +7,9 @@ const currentIncomeElement = document.querySelectorAll("#income p")[1];
 const currentExpensesElement = document.querySelectorAll("#expenses p")[1];
 const currentExpensePercentege = document.querySelectorAll(
   "#expenses .expensePercentege"
-);
+)[0];
+
+console.log(currentExpensePercentege)
 
 const months = [
   "January",
@@ -37,26 +39,20 @@ const addItemDescription = document.getElementById("item-desc");
 const addItemValue = document.getElementById("item-value");
 const addItemBtn = document.querySelector(".item-adder-container button");
 
-localStorage.setItem("budget", 0);
-localStorage.setItem("expenses", 0);
+
 
 let budget = localStorage.getItem("budget");
 let income = localStorage.getItem("income");
 let expenses = localStorage.getItem("expenses");
 
 
-
-if (budget >= 0) {
-  availableBudgetElement.innerHTML = `+${budget}`;
-} else {
-  availableBudgetElement.innerHTML = `-${budget}`;
-}
-
 currentIncomeElement.innerHTML = `+${income}`;
 currentExpensesElement.innerHTML = `-${expenses}`;
 
 let selectedSign = "+";
 (function loadEventListeners() {
+    refreshExpensePercentage();
+
   togglerIcons.addEventListener("click", (e) => {
     if (currentSign.textContent === "+") {
       currentSign.innerHTML = "-";
@@ -121,6 +117,16 @@ let selectedSign = "+";
     switch (obj.plus) {
       case true:
         refreshIncome(amount);
+        refreshBudget();
+        refreshExpensePercentage();
+        break;
+
+      case false:
+          console.log("Test")
+        refreshExpenses(amount);
+        refreshBudget();
+        refreshExpensePercentage();
+        break;
       //localStorage.setItem("income",newIncome)
     }
   }
@@ -130,6 +136,35 @@ let selectedSign = "+";
     newIncome = oldIncome + amount;
     localStorage.setItem("income", newIncome);
     currentIncomeElement.innerHTML = `+${newIncome}`;
+  }
+
+  function refreshExpenses(amount) {
+    oldExpenses = parseFloat(localStorage.getItem("expenses"));
+    newExpenses = oldExpenses + amount;
+    localStorage.setItem("expenses", newExpenses);
+    currentExpensesElement.innerHTML = `-${newExpenses}`;
+  }
+
+  function refreshBudget(){
+      let currentIncome = parseFloat(localStorage.getItem("income"));
+      let currentExpense = parseFloat(localStorage.getItem("expenses"));
+      let currentBudget = currentIncome - currentExpense;
+
+    localStorage.setItem("budget",currentBudget)
+    if (currentBudget >= 0) {
+        availableBudgetElement.innerHTML = `+${currentBudget}`;
+      } else {
+        availableBudgetElement.innerHTML = `-${currentBudget}`;
+      }
+
+  }
+
+  function refreshExpensePercentage(){
+      let currentExpense = parseInt(localStorage.getItem("expenses"));
+      let currentBudget = parseInt(localStorage.getItem("budget"));
+      let percentage = countPercentage(currentExpense,currentBudget);
+
+      currentExpensePercentege.innerHTML = parseInt(percentage) + "%"
   }
 
   function createNewItem() {
@@ -191,6 +226,6 @@ let selectedSign = "+";
   }
 
   function countPercentage(input, sum) {
-    return input / sum;
+    return input / sum * 100;
   }
 })();
