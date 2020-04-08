@@ -194,9 +194,9 @@ function refreshBudget() {
 
   localStorage.setItem("budget", currentBudget);
   if (currentBudget >= 0) {
-    availableBudgetElement.innerHTML = `+${currentBudget}`;
+    availableBudgetElement.innerHTML = `+${parseFloat(currentBudget).toFixed(2)}`;
   } else {
-    availableBudgetElement.innerHTML = `${currentBudget}`;
+    availableBudgetElement.innerHTML = `${parseFloat(currentBudget).toFixed(2)}`;
   }
 }
 
