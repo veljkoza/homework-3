@@ -75,7 +75,6 @@ let selectedSign = "+";
   refreshExpenses(0);
   refreshIncome(0);
   refreshExpensePercentage();
-  currentExpensePercentege.innerHTML = "0%";
 
   Array.from(delBtns).forEach((btn) => {
     btn.addEventListener("click", deleteItem);
