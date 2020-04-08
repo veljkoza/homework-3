@@ -41,11 +41,18 @@ const itemPercenteges = document.querySelector(".item-right");
 const delBtns = document.querySelectorAll(".delete-button");
 let leftUl = document.querySelector(".left");
 let rightUl = document.querySelector(".right");
+let selectedItemPercenteges = document.querySelectorAll(".item-right .expensePercentege")
 
+//setting local storage for first time on new machine
 if (!localStorage.getItem("budget")) {
   localStorage.setItem("budget", 0);
   localStorage.setItem("income", 0);
   localStorage.setItem("expenses", 0);
+
+  let itemArray = []
+  localStorage.setItem("items",JSON.stringify(itemArray));
+}else{
+  repouplateLists();
 }
 
 let selectedSign = "+";
@@ -127,25 +134,28 @@ let selectedSign = "+";
       return;
     }
     let obj = createNewItem();
+    let allItems = JSON.parse(localStorage.getItem("items"));
+    allItems.push(obj);
+    localStorage.setItem("items",JSON.stringify(allItems));
     let amount = parseFloat(obj.amount);
     switch (obj.plus) {
       case true:
         refreshIncome(amount);
         refreshBudget();
         refreshExpensePercentage();
+        refreshPercentegeForAll();
         break;
 
       case false:
-        console.log("Test");
         refreshExpenses(amount);
         refreshBudget();
         refreshExpensePercentage();
+        refreshPercentegeForAll();
         break;
       //localStorage.setItem("income",newIncome)
     }
   }
 
-  function removeItem() {}
 
   function refreshIncome(amount) {
     oldIncome = parseFloat(localStorage.getItem("income"));
@@ -184,67 +194,91 @@ let selectedSign = "+";
     }
     currentExpensePercentege.innerHTML = parseInt(percentage) + "%";
   }
-
-  function refreshPercentegeForAll() {}
+  function refreshPercentegeForAll() {
+    selectedItemPercenteges.forEach(percentage => {
+      let amount = percentage.parentElement.firstElementChild;
+      let intAmount = parseInt(amount.substring(1,amount.length));
+      let newPerc = parseInt(countPercentage(intAmount),localStorage.getItem("budget"));
+      percentage.innerHTML=`${newPerc}%`;
+    })
+  }
 
   function createNewItem() {
     //changed code
     let object = {
       plus: true,
+      description: "",
       amount: 0,
     };
+
+
     let newItemDesc = addItemDescription.value;
     let newItemValue = addItemValue.value;
-
     let newLi = document.createElement("li");
     newLi.classList.add("item");
 
     let newItemDescP = document.createElement("p");
     newItemDescP.innerHTML = newItemDesc;
     newLi.appendChild(newItemDescP);
+    let newDivRight = document.createElement("div");
+    newDivRight.classList.add("item-right");
+
+    let newDelBtn = document.createElement("button");
+    newDelBtn.classList.add("delete-button");
+
+    let newDelIcon = document.createElement("i");
+    newDelIcon.classList.add("fas", "fa-trash");
+
+    newDelBtn.appendChild(newDelIcon);
+
+    newDelBtn.addEventListener("click", (e) => {
+      let itemForDelete = e.target.parentElement.parentElement.parentElement;
+      leftUl.removeChild(itemForDelete)
+      rightUl.removeChild(itemForDelete);
+    });
 
     let newItemValueP = document.createElement("p");
 
     if (selectedSign === "+") {
       object.plus = true;
+      object.description = newItemDesc;
       object.amount = newItemValue;
+
+
       newItemValue = `+ ${newItemValue}`;
       newItemValueP.innerHTML = newItemValue;
-
-      newLi.appendChild(newItemValueP);
+      newDivRight.appendChild(newItemValueP);
+      newDivRight.appendChild(newDelBtn);
+      newLi.appendChild(newDivRight);
       leftUl.appendChild(newLi);
     } else {
       object.plus = false;
+      object.description = newItemDesc
       object.amount = newItemValue;
 
-      let newDivRight = document.createElement("div");
+      let newItemPercentege = countPercentage(newItemValue,parseInt(localStorage.getItem("budget")));
+
       newItemValue = `- ${newItemValue}`;
       newItemValueP.innerHTML = newItemValue;
-      newDivRight.classList.add("item-right");
       newDivRight.appendChild(newItemValueP);
 
       let newExpensePercentegeDiv = document.createElement("div");
       newExpensePercentegeDiv.classList.add("expensePercentege");
-
-      let newDelBtn = document.createElement("button");
-      newDelBtn.classList.add("delete-button");
-
-      let newDelIcon = document.createElement("i");
-      newDelIcon.classList.add("fas", "fa-trash");
-
+      
+      
       newDelBtn.appendChild(newDelIcon);
-      newDelBtn.addEventListener("click", (e) => {
-        let itemForDelete = e.target.parentElement.parentElement.parentElement;
-        rightUl.removeChild(itemForDelete);
-      });
 
+      newExpensePercentegeDiv.innerHTML = `${parseInt(newItemPercentege)}%`;
       newDivRight.appendChild(newExpensePercentegeDiv);
-      newDivRight.appendChild(newDelBtn);
+
+      newDivRight.appendChild(newDelBtn)
 
       newLi.appendChild(newDivRight);
       rightUl.appendChild(newLi);
     }
+    console.log(object)
     return object;
+
   }
 
   function countPercentage(input, sum) {

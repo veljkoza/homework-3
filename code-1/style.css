@@ -190,8 +190,16 @@
     min-height: 3rem;
 }
 
-.left .item p:last-of-type{
+.left .item p{
+    color: black;
+}
+
+.left .item .item-right p{
     color: teal;
+}
+
+.left .item .item-right{
+    width: 20%;
 }
 
 .item-right p:first-child{
@@ -202,9 +210,6 @@
     background-color: white;
 }
 
-.item > p:first-child{
-    color: black;
-}   
 
 .item:nth-child(odd){
     background-color: #f1f0f0;
@@ -236,7 +241,7 @@
     z-index: -1;
 }
 
-.right .item:hover > .item-right > .delete-button{
+.side .item:hover > .item-right > .delete-button{
     z-index: 1;
     width: 20%;
     cursor: pointer;
