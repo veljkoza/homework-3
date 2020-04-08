@@ -310,7 +310,7 @@ function deleteItem(e) {
     leftUl.removeChild(item);
   } else {
     plus = false;
-    refreshExpenses(amount);
+    refreshExpenses(-amount);
     rightUl.removeChild(item);
   }
 
