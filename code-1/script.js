@@ -211,6 +211,7 @@ function refreshExpensePercentage() {
   currentExpensePercentege.innerHTML = parseInt(percentage) + "%";
 }
 function refreshPercentegeForAll() {
+  console.log(selectedItemPercenteges);
   selectedItemPercenteges.forEach((percentage) => {
     let amount = percentage.parentElement.firstElementChild;
     let intAmount = parseInt(amount.substring(1, amount.length));
@@ -313,7 +314,6 @@ function deleteItem(e) {
     rightUl.removeChild(item);
   }
 
-  console.log(plus,desc,amount)
   deleteItemFromStorage(plus,desc,amount);
   refreshBudget();
 
@@ -321,9 +321,20 @@ function deleteItem(e) {
 
 function deleteItemFromStorage(plus,desc,amount){
   let data = JSON.parse(localStorage.getItem("items"));
-  console.log(data)
-  let newData = data.find(item => item.plus === plus && item.description === desc && item.amount == amount);
-  console.log(newData);
+  let newData = data.find(item =>findData(item))
+  let index = data.indexOf(newData);
+
+  let newArray = data.splice(index,1);
+
+  localStorage.setItem("items",JSON.stringify(data))
+
+
+
+  function findData(item){
+    if(item.plus === plus && item.description === desc && item.amount == amount){
+      return item;
+    }
+  }
 
 }
 

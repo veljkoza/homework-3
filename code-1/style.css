@@ -215,6 +215,7 @@
     background-color: #f1f0f0;
 }
 
+
 .item p:first-child{
     width: 60%;
 }
@@ -251,7 +252,7 @@
 
 /*responsive*/
 
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 768px) {
     .first-section{
         height: 5vh;
         background-size: cover;
@@ -265,8 +266,17 @@
         width: 80%;
     }
 
+    .money-box{
+        margin: .3rem;
+    }
+
     .money-box p:first-child{
         width: 30%;
+    }
+
+    .money-box p:last-of-type{
+        margin-right: 0;
+        width: 10%;
     }
 
     .statistics-container{
@@ -276,5 +286,14 @@
     .side{
         width: 98%;
         margin: .5rem 0;
+    }
+
+    .item-right{
+        width: 20%;
+    }
+
+    .delete-button{
+        width: 20%;
+        z-index: 1;
     }
 }
