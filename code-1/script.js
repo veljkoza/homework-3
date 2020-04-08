@@ -177,7 +177,7 @@ function refreshIncome(amount) {
   oldIncome = parseFloat(localStorage.getItem("income"));
   newIncome = oldIncome + amount;
   localStorage.setItem("income", newIncome);
-  currentIncomeElement.innerHTML = `+${newIncome}`;
+  currentIncomeElement.innerHTML = `+${parseFloat(newIncome).toFixed(2)}`;
 }
 
 function refreshExpenses(amount) {
