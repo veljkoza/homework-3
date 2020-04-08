@@ -9,8 +9,6 @@ const currentExpensePercentege = document.querySelectorAll(
   "#expenses .expensePercentege"
 )[0];
 
-console.log(currentExpensePercentege)
-
 const months = [
   "January",
   "February",
@@ -27,7 +25,6 @@ const months = [
 ];
 let currentDate = new Date();
 let currentMonth = months[currentDate.getMonth()];
-console.log(currentMonth);
 currentMonthElement.innerHTML = `${currentMonth}`;
 
 //Second section consts
@@ -39,19 +36,32 @@ const addItemDescription = document.getElementById("item-desc");
 const addItemValue = document.getElementById("item-value");
 const addItemBtn = document.querySelector(".item-adder-container button");
 
+//Third section consts
+const itemPercenteges = document.querySelector(".item-right");
+const delBtns = document.querySelectorAll(".delete-button");
+let leftUl = document.querySelector(".left");
+let rightUl = document.querySelector(".right");
 
-
-let budget = localStorage.getItem("budget");
-let income = localStorage.getItem("income");
-let expenses = localStorage.getItem("expenses");
-
-
-currentIncomeElement.innerHTML = `+${income}`;
-currentExpensesElement.innerHTML = `-${expenses}`;
+if (!localStorage.getItem("budget")) {
+  localStorage.setItem("budget", 0);
+  localStorage.setItem("income", 0);
+  localStorage.setItem("expenses", 0);
+}
 
 let selectedSign = "+";
 (function loadEventListeners() {
-    refreshExpensePercentage();
+  refreshBudget();
+  refreshExpenses(0);
+  refreshIncome(0);
+  refreshExpensePercentage();
+  currentExpensePercentege.innerHTML = "0%";
+
+  Array.from(delBtns).forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      let itemForDelete = e.target.parentElement.parentElement.parentElement;
+      rightUl.removeChild(itemForDelete);
+    });
+  });
 
   togglerIcons.addEventListener("click", (e) => {
     if (currentSign.textContent === "+") {
@@ -112,6 +122,10 @@ let selectedSign = "+";
   addItemBtn.addEventListener("click", addItem);
 
   function addItem() {
+    if (addItemDescription.value === "" || addItemValue.value === "") {
+      alert("That field can't be empty!");
+      return;
+    }
     let obj = createNewItem();
     let amount = parseFloat(obj.amount);
     switch (obj.plus) {
@@ -122,7 +136,7 @@ let selectedSign = "+";
         break;
 
       case false:
-          console.log("Test")
+        console.log("Test");
         refreshExpenses(amount);
         refreshBudget();
         refreshExpensePercentage();
@@ -130,6 +144,8 @@ let selectedSign = "+";
       //localStorage.setItem("income",newIncome)
     }
   }
+
+  function removeItem() {}
 
   function refreshIncome(amount) {
     oldIncome = parseFloat(localStorage.getItem("income"));
@@ -145,31 +161,33 @@ let selectedSign = "+";
     currentExpensesElement.innerHTML = `-${newExpenses}`;
   }
 
-  function refreshBudget(){
-      let currentIncome = parseFloat(localStorage.getItem("income"));
-      let currentExpense = parseFloat(localStorage.getItem("expenses"));
-      let currentBudget = currentIncome - currentExpense;
+  function refreshBudget() {
+    let currentIncome = parseFloat(localStorage.getItem("income"));
+    let currentExpense = parseFloat(localStorage.getItem("expenses"));
+    let currentBudget = currentIncome - currentExpense;
 
-    localStorage.setItem("budget",currentBudget)
+    localStorage.setItem("budget", currentBudget);
     if (currentBudget >= 0) {
-        availableBudgetElement.innerHTML = `+${currentBudget}`;
-      } else {
-        availableBudgetElement.innerHTML = `-${currentBudget}`;
-      }
-
+      availableBudgetElement.innerHTML = `+${currentBudget}`;
+    } else {
+      availableBudgetElement.innerHTML = `${currentBudget}`;
+    }
   }
 
-  function refreshExpensePercentage(){
-      let currentExpense = parseInt(localStorage.getItem("expenses"));
-      let currentBudget = parseInt(localStorage.getItem("budget"));
-      let percentage = countPercentage(currentExpense,currentBudget);
+  function refreshExpensePercentage() {
+    let currentExpense = parseInt(localStorage.getItem("expenses"));
+    let currentBudget = parseInt(localStorage.getItem("budget"));
+    let percentage = countPercentage(currentExpense, currentBudget);
 
-      currentExpensePercentege.innerHTML = parseInt(percentage) + "%"
+    if (isNaN(percentage)) {
+      currentExpensePercentege.innerHTML = "0%";
+    }
+    currentExpensePercentege.innerHTML = parseInt(percentage) + "%";
   }
+
+  function refreshPercentegeForAll() {}
 
   function createNewItem() {
-    let leftUl = document.querySelector(".left");
-    let rightUl = document.querySelector(".right");
     //changed code
     let object = {
       plus: true,
@@ -215,6 +233,10 @@ let selectedSign = "+";
       newDelIcon.classList.add("fas", "fa-trash");
 
       newDelBtn.appendChild(newDelIcon);
+      newDelBtn.addEventListener("click", (e) => {
+        let itemForDelete = e.target.parentElement.parentElement.parentElement;
+        rightUl.removeChild(itemForDelete);
+      });
 
       newDivRight.appendChild(newExpensePercentegeDiv);
       newDivRight.appendChild(newDelBtn);
@@ -226,6 +248,6 @@ let selectedSign = "+";
   }
 
   function countPercentage(input, sum) {
-    return input / sum * 100;
+    return (input / sum) * 100;
   }
 })();
