@@ -184,7 +184,7 @@ function refreshExpenses(amount) {
   oldExpenses = parseFloat(localStorage.getItem("expenses"));
   newExpenses = oldExpenses + amount;
   localStorage.setItem("expenses", newExpenses);
-  currentExpensesElement.innerHTML = `-${newExpenses}`;
+  currentExpensesElement.innerHTML = `-${parseFloat(newExpenses).toFixed(2)}`;
 }
 
 function refreshBudget() {
