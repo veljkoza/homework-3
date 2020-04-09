@@ -50,7 +50,6 @@ if (!localStorage.getItem("budget")) {
   localStorage.setItem("budget", 0);
   localStorage.setItem("income", 0);
   localStorage.setItem("expenses", 0);
-
   let itemArray = [];
   localStorage.setItem("items", JSON.stringify(itemArray));
 } else {
@@ -201,11 +200,12 @@ function refreshBudget() {
 
 function refreshExpensePercentage() {
   let currentExpense = parseInt(localStorage.getItem("expenses"));
-  let currentBudget = parseInt(localStorage.getItem("budget"));
-  let percentage = countPercentage(currentExpense, currentBudget);
+  let currentIncome = parseInt(localStorage.getItem("income"));
+  let percentage = countPercentage(currentExpense, currentIncome);
 
   if (isNaN(percentage)) {
     currentExpensePercentege.innerHTML = "0%";
+    console.log("test")
   }
   currentExpensePercentege.innerHTML = parseInt(percentage) + "%";
 }
