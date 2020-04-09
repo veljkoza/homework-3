@@ -56,14 +56,14 @@ if (!localStorage.getItem("budget")) {
   repouplateLists();
 }
 
-function repouplateLists(){
+function repouplateLists() {
   let data = JSON.parse(localStorage.getItem("items"));
 
-  data.forEach(item => {
-    if(item.plus){
-      createNewItem("+",item.description,parseInt(item.amount));
-    }else{
-      createNewItem("-",item.description,parseInt(item.amount));
+  data.forEach((item) => {
+    if (item.plus) {
+      createNewItem("+", item.description, parseInt(item.amount));
+    } else {
+      createNewItem("-", item.description, parseInt(item.amount));
     }
   });
 }
@@ -192,9 +192,13 @@ function refreshBudget() {
 
   localStorage.setItem("budget", currentBudget);
   if (currentBudget >= 0) {
-    availableBudgetElement.innerHTML = `+${parseFloat(currentBudget).toFixed(2)}`;
+    availableBudgetElement.innerHTML = `+${parseFloat(currentBudget).toFixed(
+      2
+    )}`;
   } else {
-    availableBudgetElement.innerHTML = `${parseFloat(currentBudget).toFixed(2)}`;
+    availableBudgetElement.innerHTML = `${parseFloat(currentBudget).toFixed(
+      2
+    )}`;
   }
 }
 
@@ -205,9 +209,9 @@ function refreshExpensePercentage() {
 
   if (isNaN(percentage)) {
     currentExpensePercentege.innerHTML = "0%";
-    console.log("test")
+  } else {
+    currentExpensePercentege.innerHTML = parseInt(percentage) + "%";
   }
-  currentExpensePercentege.innerHTML = parseInt(percentage) + "%";
 }
 function refreshPercentegeForAll() {
   console.log(selectedItemPercenteges);
@@ -305,7 +309,7 @@ function deleteItem(e) {
 
   if (left) {
     plus = true;
-    refreshIncome(-amount)
+    refreshIncome(-amount);
     leftUl.removeChild(item);
   } else {
     plus = false;
@@ -313,28 +317,28 @@ function deleteItem(e) {
     rightUl.removeChild(item);
   }
 
-  deleteItemFromStorage(plus,desc,amount);
+  deleteItemFromStorage(plus, desc, amount);
   refreshBudget();
-
 }
 
-function deleteItemFromStorage(plus,desc,amount){
+function deleteItemFromStorage(plus, desc, amount) {
   let data = JSON.parse(localStorage.getItem("items"));
-  let newData = data.find(item =>findData(item))
+  let newData = data.find((item) => findData(item));
   let index = data.indexOf(newData);
 
-  let newArray = data.splice(index,1);
+  let newArray = data.splice(index, 1);
 
-  localStorage.setItem("items",JSON.stringify(data))
+  localStorage.setItem("items", JSON.stringify(data));
 
-
-
-  function findData(item){
-    if(item.plus === plus && item.description === desc && item.amount == amount){
+  function findData(item) {
+    if (
+      item.plus === plus &&
+      item.description === desc &&
+      item.amount == amount
+    ) {
       return item;
     }
   }
-
 }
 
 function countPercentage(input, sum) {
