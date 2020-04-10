@@ -1,38 +1,123 @@
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-.main{
-    width: 50%;
-    margin: 3rem auto;
-
+.header {
+  margin: 0 auto;
+  width: 50%;
+  height: 200px;
+  background: url("../code-2/img/cardInfoBg.jpg") no-repeat center center;
+  background-size: cover;
+  margin-bottom: 2rem;
+  font-family: "Press Start 2P", cursive;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: x-large;
 }
 
-.grid-container{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 10px;
+.button-container {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.game-card{
-    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.514);
-    position: relative;
-    height: 300px;
-    background: url("https://cdn.cdkeys.com/500x706/media/catalog/product/g/r/grand_theft_auto_v_5_gta_5_pc_3.jpg") no-repeat;
-    background-size: cover;
+#load-more {
+  height: 30px;
+  width: 100px;
+  padding: 0.3rem;
+  border-radius: 3px;
+  border-style: none;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgb(1, 94, 112) 0%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  font-family: "Righteous", cursive;
+  color: white;
+  text-shadow: rgb(59, 140, 207) 1px 1px;
+  transition: all 0.2s;
 }
 
-.game-info{
-    position: absolute;
-    bottom: 0;
-    background-color: blueviolet;
+#load-more:hover {
+  box-shadow: 0px 0px 4px rgb(59, 140, 207);
+  transform: scale(1.1);
+}
+
+.main {
+  width: 50%;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.game-card {
+  box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.514);
+  position: relative;
+  height: 250px;
+}
+
+.game-card:hover > .game-img,
+.game-img {
+  height: 90%;
+}
+
+.game-info {
+  position: absolute;
+  bottom: 0;
+  background-color: blueviolet;
+  width: 100%;
+  padding: 0.2rem 0;
+  text-align: center;
+  background: url("../code-2/img/cardInfoBg.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+.game-img {
+  background: url("https://cdn.cdkeys.com/500x706/media/catalog/product/g/r/grand_theft_auto_v_5_gta_5_pc_3.jpg")
+    no-repeat center center;
+  background-size: 100% 100%;
+  height: 70%;
+  transition: height 0.5s;
+}
+
+.game-info h4 {
+  width: 100%;
+  font-family: "Righteous", cursive;
+  color: white;
+  text-shadow: rgb(57, 106, 146) 2px 2px 2px;
+  background: rgba(0, 0, 0, 0.226);
+}
+
+.game-info > * {
+  margin-top: 0.1rem;
+}
+
+.yellow {
+  color: yellow;
+}
+
+@media only screen and (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .header {
     width: 100%;
-    padding: .2rem;
-    text-align: center;
-}
+    height: 150px;
+  }
 
-.yellow{
-    color: yellow;
+  
+  .header h2 {
+    font-size: initial;
+  }
 }
