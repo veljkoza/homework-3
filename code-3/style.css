@@ -1,0 +1,50 @@
+body{
+    height: 100vh;
+    background: url("https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb") no-repeat center center;
+    background-size: cover;
+    color: white;
+}
+
+.container h2{
+    margin-top: 5rem;
+}
+
+
+.hero{
+    background: rgba(43, 42, 42, 0.685);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+ul{
+    list-style: none;
+    border-top: 2px solid white;
+    margin-top: 2rem;
+}
+
+ul > li {
+    padding: .7rem 0;
+    border-bottom: 1px solid #ffffff75;
+    position: relative;
+}
+
+ul > li:hover{
+    background-color: rgba(43, 42, 42, 0.349);
+    border-radius: 5px;
+}
+
+input[type=checkbox]{
+    position: absolute;
+    top: 40%;
+    right: 10px;
+}
+
+.linethrough{
+    text-decoration: line-through;
+    text-decoration-color: black;
+    text-decoration-thickness: 2px;
+}
+
