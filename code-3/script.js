@@ -18,9 +18,16 @@ function createElementsForLi(text, checked) {
     li.classList.toggle("linethrough");
   });
   checkBox.type = "checkbox";
+
+  let delBtn = document.createElement("i");
+  delBtn.classList.add("fas","fa-times-circle");
+  delBtn.addEventListener("click",deleteTask);
+
+  li.appendChild(delBtn);
+
   if (checked) {
     checkBox.checked = true;
-    li.classList.add("lineThrough");
+    li.classList.add("linethrough");
   }
   li.appendChild(checkBox);
   return li;
@@ -41,6 +48,11 @@ function loadItems() {
   if (jsonServerId) {
     fetchTasks(jsonServerId);
   }
+}
+
+function deleteTask(e){
+    let itemToDelete = e.currentTarget.parentElement;
+    tasksUl.removeChild(itemToDelete);
 }
 
 function fetchTasks(id) {

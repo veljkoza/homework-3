@@ -39,7 +39,8 @@ ul > li:hover{
 input[type=checkbox]{
     position: absolute;
     top: 40%;
-    right: 10px;
+    right: 10%;
+    display: none;
 }
 
 .linethrough{
@@ -47,4 +48,32 @@ input[type=checkbox]{
     text-decoration-color: black;
     text-decoration-thickness: 2px;
 }
+
+li>i{
+    position: absolute;
+    top:35%;
+    right: 10px;
+}
+
+.fas{
+    display: none;
+}
+
+li:hover>input[type=checkbox]{
+    display: block;
+}
+
+li:hover>.fas{
+    display: block;
+}
+
+.fas:hover{
+    color: red;
+}
+
+
+
+
+
+
 
