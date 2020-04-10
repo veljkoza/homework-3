@@ -92,7 +92,7 @@ function fetchOneGame(id,add) {
         newObj.genre.push(genre.name);
       });
       if (newObj.bgImg == null) {
-        newObj.bgImg = "../code-2/img/uknownGameImg.gif";
+        newObj.bgImg = "img/uknownGameImg.gif";
       }
 
       data.push(newObj);
