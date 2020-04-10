@@ -1,0 +1,38 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.main{
+    width: 50%;
+    margin: 3rem auto;
+
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+}
+
+.game-card{
+    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.514);
+    position: relative;
+    height: 300px;
+    background: url("https://cdn.cdkeys.com/500x706/media/catalog/product/g/r/grand_theft_auto_v_5_gta_5_pc_3.jpg") no-repeat;
+    background-size: cover;
+}
+
+.game-info{
+    position: absolute;
+    bottom: 0;
+    background-color: blueviolet;
+    width: 100%;
+    padding: .2rem;
+    text-align: center;
+}
+
+.yellow{
+    color: yellow;
+}
