@@ -80,4 +80,11 @@ li:hover > .fas {
   .fas {
     display: block;
   }
+  .row{
+      margin: 0;
+  }
+
+  #saveBtn{
+      font-size: 10px;
+  }
 }
