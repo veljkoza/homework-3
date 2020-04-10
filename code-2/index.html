@@ -24,37 +24,34 @@
   </head>
   <body>
     <div class="header"><h2>Gamezzz List</h2></div>
-
-    <div class="main">
-      <div class="list-games">
-        <div id="inputText">
-          <input type="text" name="Search for games..." id="" />
+    <div class="list-games">
+      <div id="inputText">
+        <input type="text" name="Search for games..." id="" />
+      </div>
+      <div>
+        <button id="searchBtn">Search</button>
+      </div>
+      <div class="radio-buttons">
+        <div>
+          <input type="radio" name="name" id="" /><label for="name">Name</label>
         </div>
         <div>
-          <button id="searchBtn">Search</button>
-        </div>
-        <div class="radio-buttons">
-          <div>
-            <input type="radio" name="name" id="" /><label for="name"
-              >Name</label
-            >
-          </div>
-          <div>
-            <input type="radio" name="genre" id="" /><label for="genre"
-              >Genre</label
-            >
-          </div>
-        </div>
-        <div>
-          <select name="rating" id="rating">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
+          <input type="radio" name="genre" id="" /><label for="genre"
+            >Genre</label
+          >
         </div>
       </div>
+      <div>
+        <select name="rating" id="rating">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+    </div>
+    <div class="main">
       <div class="grid-container"></div>
       <div class="button-container">
         <button id="load-more">Load More</button>
