@@ -56,6 +56,7 @@
 
 .list-games {
   width: 50%;
+  margin: 0 auto;
   height: 80px;
   background-color: rgb(57, 106, 146);
   background: linear-gradient(
@@ -101,6 +102,26 @@
   box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.514);
   position: relative;
   height: 250px;
+  cursor: pointer;
+}
+
+.game-card.hide{
+  display: none;
+}
+
+.delBtn{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: white;
+  background-color: black;
+  padding: 0 .3rem;
+  border-style: none;
+}
+
+.delBtn:hover{
+  color: red;
 }
 
 .game-card:hover > .game-img,

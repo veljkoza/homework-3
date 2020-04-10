@@ -1,35 +1,67 @@
 const gridContainer = document.querySelector(".grid-container");
 const loadMoreBtn = document.getElementById("load-more");
-const data = [];
+const inputText = document.getElementById("inputText").firstElementChild;
+const searchBtn = document.getElementById("searchBtn");
+const nameRadio = document.getElementById("name");
+const genreRadio = document.getElementById("genre");
+let allData = [];
+let ratingsOptions = document.getElementById("rating");
+let data = [];
 
 let pointer;
 let count = 3;
 
-(function loadMoreModule() {
-  loadMoreBtn.addEventListener("click", loadThree);
+loadFirstThree();
 
-  (function loadFirstThree() {
-    let i;
-    for (i = 0; i <= count; i++) {
-      fetchOneGame(i);
+(function loadEventListeners() {
+  loadMoreBtn.addEventListener("click", loadThree);
+  inputText.addEventListener("keyup", (e) => {
+    if (e.target.value === "") {
+      data = [];
+      gridContainer.innerHTML = "";
+      count = 3;
+      loadFirstThree();
+      console.log(data);
     }
-    pointer = i;
-    count += 3;
-  })();
+  });
+  searchBtn.addEventListener("click", (e) => {
+    let foundGames = searchGames();
+    gridContainer.innerHTML = "";
+    displayFoundGames(foundGames);
+  });
 })();
+
+function loadAll(){
+  for (let i = 1; i <= 80; i++) {
+    fetchOneGame(i,false);    
+  }
+}
+
+function loadFirstThree() {
+  let i;
+  for (i = 0; i <= count; i++) {
+    fetchOneGame(i,true);
+  }
+  loadAll();
+  pointer = i;
+  count += 3;
+}
 
 function loadThree() {
   console.log("BEFORE\npointer: " + pointer + ", count: " + count);
   let i;
   for (i = pointer; i <= count; i++) {
-    fetchOneGame(i);
+    fetchOneGame(i,true);
   }
   pointer = i;
   count += 3;
   console.log("AFTER\npointer: " + pointer + ", count: " + count);
 }
 
-function fetchOneGame(id) {
+
+
+
+function fetchOneGame(id,add) {
   fetch(`https://rawg-video-games-database.p.rapidapi.com/games/${id}`, {
     method: "GET",
     headers: {
@@ -64,8 +96,11 @@ function fetchOneGame(id) {
       }
 
       data.push(newObj);
-      let newGameDiv = createGameDiv(newObj);
+      allData.push(newObj);
+      if(add){
+        let newGameDiv = createGameDiv(newObj);
       addGame(newGameDiv);
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -77,13 +112,32 @@ function addGame(gameDiv) {
 }
 
 function createGameDiv(gameObj) {
+  let gameId = gameObj.id;
   let gameName = gameObj.name;
   let gamePublisher = gameObj.publisher;
   let gameGenres = gameObj.genre;
   let gameRating = gameObj.rating;
   let gameBg = gameObj.bgImg;
+  let gameUrl = gameObj.url;
   let gameCard = document.createElement("div");
   gameCard.classList.add("game-card");
+
+  let delBtn = document.createElement("button");
+  delBtn.classList.add("delBtn");
+
+  let xIcon = document.createElement("i");
+  xIcon.classList.add("fas", "fa-times");
+
+  delBtn.appendChild(xIcon);
+  delBtn.addEventListener("click", (e) => {
+    e.stopImmediatePropagation();
+    let toDelete = e.currentTarget.parentElement;
+    let id = toDelete.getAttribute("data-id");
+    removeById(id);
+    gridContainer.removeChild(toDelete);
+  });
+
+  gameCard.appendChild(delBtn);
 
   let gameInfo = document.createElement("div");
   gameInfo.classList.add("game-info");
@@ -114,7 +168,13 @@ function createGameDiv(gameObj) {
 
   gameCard.appendChild(imgDiv);
   gameCard.appendChild(gameInfo);
+  gameCard.setAttribute("title", gameName);
+  gameCard.setAttribute("data-id", gameId);
 
+  gameCard.addEventListener("click", (e) => {
+    let win = window.open(gameUrl, "_blank");
+    win.focus();
+  });
   return gameCard;
 
   function addStars(rating) {
@@ -144,4 +204,49 @@ function createGameDiv(gameObj) {
 
     return imgDiv;
   }
+}
+
+function removeById(id){
+  let gameToDelete = data.find(game => game.id == id);
+  let index = data.indexOf(gameToDelete)
+  console.log(gameToDelete)
+  data.slice(index,1);
+}
+
+function displayFoundGames(foundGames) {
+  console.log(foundGames)
+  foundGames.forEach(game => {
+    const index = data.indexOf(game);
+    data.splice(index,1);
+  })
+  foundGames.forEach((game) => fetchOneGame(game.id,true));
+}
+
+function searchGames() {
+  let selectedOption = ratingsOptions[ratingsOptions.selectedIndex].value;
+  let searchText = inputText.value.toLowerCase();
+  let foundGames =[];
+
+
+  if (nameRadio.checked) {
+    foundGames = data.filter(
+      (game) =>
+        game.name.toLowerCase().includes(searchText) &&
+        game.rating >= selectedOption
+    );
+  } else {
+    data.forEach((game) => {
+      console.log(game)
+      game.genre.forEach((genre) => {
+        if (
+          genre.toLowerCase().includes(searchText) &&
+          game.rating >= selectedOption
+        ) {
+          foundGames.push(game);
+        }
+      });
+    });
+  }
+
+  return foundGames;
 }
