@@ -96,7 +96,6 @@ let selectedSign = "+";
       (e.keyCode >= 48 && e.keyCode <= 57) ||
       (e.keyCode >= 96 && e.keyCode <= 105)
     ) {
-      console.log(addItemDescription);
 
       addItemDescription.value = previousDesc;
     } else {
@@ -214,7 +213,6 @@ function refreshExpensePercentage() {
   }
 }
 function refreshPercentegeForAll() {
-  console.log(selectedItemPercenteges);
   selectedItemPercenteges.forEach((percentage) => {
     let amount = percentage.parentElement.firstElementChild;
     let intAmount = parseInt(amount.substring(1, amount.length));

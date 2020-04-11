@@ -21,7 +21,6 @@ loadFirstThree();
       gridContainer.innerHTML = "";
       count = 3;
       loadFirstThree();
-      console.log(data);
     }
   });
   searchBtn.addEventListener("click", (e) => {
@@ -48,14 +47,12 @@ function loadFirstThree() {
 }
 
 function loadThree() {
-  console.log("BEFORE\npointer: " + pointer + ", count: " + count);
   let i;
   for (i = pointer; i <= count; i++) {
     fetchOneGame(i,true);
   }
   pointer = i;
   count += 3;
-  console.log("AFTER\npointer: " + pointer + ", count: " + count);
 }
 
 
@@ -96,14 +93,12 @@ function fetchOneGame(id,add) {
       }
 
       data.push(newObj);
-      allData.push(newObj);
       if(add){
         let newGameDiv = createGameDiv(newObj);
       addGame(newGameDiv);
       }
     })
     .catch((err) => {
-      console.log(err);
     });
 }
 
@@ -209,12 +204,10 @@ function createGameDiv(gameObj) {
 function removeById(id){
   let gameToDelete = data.find(game => game.id == id);
   let index = data.indexOf(gameToDelete)
-  console.log(gameToDelete)
   data.slice(index,1);
 }
 
 function displayFoundGames(foundGames) {
-  console.log(foundGames)
   foundGames.forEach(game => {
     const index = data.indexOf(game);
     data.splice(index,1);
@@ -236,7 +229,6 @@ function searchGames() {
     );
   } else {
     data.forEach((game) => {
-      console.log(game)
       game.genre.forEach((genre) => {
         if (
           genre.toLowerCase().includes(searchText) &&
